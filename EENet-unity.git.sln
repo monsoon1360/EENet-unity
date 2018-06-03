@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{2BB85E2B-46AE-275E-6073-C4961CC7F738}") = "EENet-unity.git", "Assembly-CSharp.csproj", "{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal

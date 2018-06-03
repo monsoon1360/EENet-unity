@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{76A3D6DB-03E6-A4B4-4D70-AA3380C7698C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_2;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>E:/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>E:/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\EENet\Scripts\ByteBuffer.cs" />
+     <Compile Include="Assets\EENet\Scripts\EEClient.cs" />
+     <Compile Include="Assets\EENet\Scripts\EventManager.cs" />
+     <Compile Include="Assets\EENet\Scripts\Packet.cs" />
+     <Compile Include="Assets\EENet\Scripts\PacketException.cs" />
+     <Compile Include="Assets\EENet\Scripts\PacketType.cs" />
+     <Compile Include="Assets\EENet\Scripts\Protocol\IProtocol.cs" />
+     <Compile Include="Assets\EENet\Scripts\Protocol\MsgpackProtocolImpl.cs" />
+     <Compile Include="Assets\EENet\Scripts\TcpSocket.cs" />
+     <Compile Include="Assets\EENet\Scripts\Test\TestEEClient.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\GenerateTypeSerializerAttribute.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IJsonReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IJsonWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IValueInfo.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IndexedDictionary.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Json.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonMember.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonReaderExtentions.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonSerializationException.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonStreamReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonStreamWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonStringBuilderReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonStringBuilderWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonStringReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonTextReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonTextWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonToken.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonUtils.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\JsonWriterExtentions.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\BigEndianBitConverter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\DefaultMsgPackExtensionTypeHandler.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\EndianBitConverter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\Endianness.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\LittleEndianBitConverter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackExtensionType.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackExtensionTypeHandler.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackReader.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackTimestamp.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackType.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\MsgPackWriter.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\UnknownMsgPackExtentionTypeException.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MessagePack\UnknownMsgPackFormatException.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\DataMemberDescription.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\FieldDescription.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\MemberDescription.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\PropertyDescription.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\ReflectionUtils.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Metadata\TypeDescription.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\MsgPack.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\ReflectionExtentions.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\SerializationContext.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\SerializationOptions.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\ArraySerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\BinarySerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\BoundsSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\DateTimeOffsetSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\DateTimeSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\DictionaryEntrySerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\DictionarySerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\EnumNumberSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\EnumSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\GuidSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\Matrix4x4Serializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\MsgPackExtensionTypeSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\MsgPackTimestampSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\ObjectSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\PrimitiveTypeSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\QuaternionSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\RectSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\StreamSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\TimeSpanSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\UriSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\Vector2Serializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\Vector3Serializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\Vector4Serializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\Serializers\VersionSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\TypeSerializer.cs" />
+     <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\TypeSerializerAttribute.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\Benchmark.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\BigTestObject.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\ByteCountingStream.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\ITestObject.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\MediumTestObject.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Benchmark\SmallTestObject.cs" />
+     <Compile Include="Assets\GameDev\Scripts\Example\SerializeExample.cs" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>E:/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
