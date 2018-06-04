@@ -53,8 +53,9 @@
      <Compile Include="Assets\EENet\Scripts\PacketType.cs" />
      <Compile Include="Assets\EENet\Scripts\Protocol\IProtocol.cs" />
      <Compile Include="Assets\EENet\Scripts\Protocol\MsgpackProtocolImpl.cs" />
-     <Compile Include="Assets\EENet\Scripts\TcpSocket.cs" />
      <Compile Include="Assets\EENet\Scripts\Test\TestEEClient.cs" />
+     <Compile Include="Assets\EENet\Scripts\Transport\ITransport.cs" />
+     <Compile Include="Assets\EENet\Scripts\Transport\TcpTransportImpl.cs" />
      <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\GenerateTypeSerializerAttribute.cs" />
      <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IJsonReader.cs" />
      <Compile Include="Assets\GameDev\Plugins\GameDevWare.Serialization\IJsonWriter.cs" />

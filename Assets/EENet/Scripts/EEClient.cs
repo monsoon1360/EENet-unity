@@ -37,7 +37,7 @@ namespace EENet
 
         private EventManager eventMgr;
 
-        private TcpSocket tcpSocket;
+        private ITransport transport;
 
         private IProtocol protocol;
 
@@ -54,16 +54,16 @@ namespace EENet
 
         public void InitClient(String host, int port, Action callback = null)
         {
-            tcpSocket = new TcpSocket();
+            transport = new TcpTransportImpl(this);
             protocol = new MsgpackProtocolImpl();
             eventMgr = new EventManager(protocol);
-            NetworkStateChange(NetworkState.CONNECTING);
-            tcpSocket.InitSocket(host, port, callback);
+             transport.InitSocket(host, port, callback);
         }
 
-        private void NetworkStateChange(NetworkState newState)
+        public void NetworkStateChange(NetworkState newState)
         {
             currNetworkState = newState;
+            Debug.Log("Change network state:" + currNetworkState);
 
             if (NetworkStateChangedEvent != null)
             {
@@ -82,7 +82,7 @@ namespace EENet
             for (;;)
             {
                 Debug.Log("receive pakcet...");
-                Packet p = tcpSocket.ReadPacket();
+                Packet p = transport.ReadPacket();
                 if (p == null)
                 {
                     Debug.LogWarning("receive packet errror...");
@@ -107,7 +107,7 @@ namespace EENet
             p.id = reqId;
             p.topic = route;
             p.payload = protocol.Marshal(msg);
-            this.tcpSocket.WritePacket(p);
+            this.transport.WritePacket(p);
             reqId++;
             if (reqId >= Int32.MaxValue) {
                 reqId = 1;

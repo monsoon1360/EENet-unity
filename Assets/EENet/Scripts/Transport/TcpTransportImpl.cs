@@ -1,18 +1,17 @@
-using UnityEngine;
-using System.Collections;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
+
+
 using System;
-using EENet;
-using System.Threading;
+using System.IO;
+using System.Net.Sockets;
+using UnityEngine;
 
 namespace EENet
 {
-    public class TcpSocket : IDisposable
+
+    public class TcpTransportImpl : ITransport
     {
 
-        private TcpClient client;
+        private TcpClient tcpClient;
 
         private NetworkStream stream;
 
@@ -22,31 +21,38 @@ namespace EENet
 
         private bool isReady;
 
-        public TcpSocket()
-        {
+        private EEClient ee;
 
+        public TcpTransportImpl(EEClient ee)
+        {
+            this.ee = ee;
+        }
+
+
+        
+        public void Dispose()
+        {
+            if (isReady)
+            {
+                tcpClient.Close();
+                isReady = false;
+            }
         }
 
         public void InitSocket(string url, int port, Action callback)
         {
-
-            client = new TcpClient();
-            client.ReceiveTimeout = 60;
-            client.SendTimeout = 60;
-            client.BeginConnect(url, port, new AsyncCallback((result) =>
+            tcpClient = new TcpClient();
+            tcpClient.ReceiveTimeout = 60;
+            tcpClient.SendTimeout = 60;
+            ee.NetworkStateChange(NetworkState.CONNECTING);
+            tcpClient.BeginConnect(url, port, new AsyncCallback((result) =>
             {
                 try
                 {
-                    client.EndConnect(result);
-                    if (client.Connected)
-                    {
-                        Debug.Log("connect success.");
-                    }
-                    else
-                    {
-                        Debug.Log("connect failed.");
-                    }
-                    stream = client.GetStream();
+                    tcpClient.EndConnect(result);
+                    Debug.Log("connect success.");
+                    ee.NetworkStateChange(NetworkState.CONNECTED);
+                    stream = tcpClient.GetStream();
                     binaryReader = new BinaryReader(stream);
                     binaryWriter = new BinaryWriter(stream);
                     isReady = true;
@@ -58,10 +64,16 @@ namespace EENet
                 catch (SocketException e)
                 {
                     Debug.LogError("connect to server error exception." + e.Message);
-                    throw e;
+                    ee.NetworkStateChange(NetworkState.ERROR);
+                    Dispose();
                 }
 
-            }), client);
+            }), tcpClient);
+        }
+
+        public bool IsReady()
+        {
+           return isReady;
         }
 
         public Packet ReadPacket()
@@ -75,7 +87,6 @@ namespace EENet
             return p;
         }
 
-
         public void WritePacket(Packet packet)
         {
             if (!isReady)
@@ -86,17 +97,6 @@ namespace EENet
             byte[] data = packet.ToBytes();
             binaryWriter.Write(data);
             binaryWriter.Flush();
-
-        }
-
-        public void Dispose()
-        {
-            if (isReady)
-            {
-                client.Close();
-                isReady = false;
-            }
         }
     }
-
 }
