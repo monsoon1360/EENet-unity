@@ -52,7 +52,7 @@ namespace EENet
         }
 
         public String Version() {
-            return "0.1";
+            return "0.2";
         }
 
         public void InitClient(String host, int port, Action callback = null)
