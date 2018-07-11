@@ -19,13 +19,20 @@ namespace EENet
 
         private BinaryReader binaryReader;
 
+        private IAsyncResult  asyncSendCallback;
+
         private bool isReady;
 
         private EEClient ee;
 
-        public TcpTransportImpl(EEClient ee)
+        private IBound codec;
+
+
+
+        public TcpTransportImpl(EEClient ee, Action<Byte[]> callback)
         {
             this.ee = ee;
+            codec = new PacketBoundHandler(this, callback);
         }
 
 
@@ -35,8 +42,19 @@ namespace EENet
             if (isReady)
             {
                 tcpClient.Close();
+                codec.Dispose();
                 isReady = false;
             }
+        }
+
+        public BinaryReader GetReader()
+        {
+            return this.binaryReader;
+        }
+
+        public BinaryWriter GetWriter()
+        {
+            return this.binaryWriter;
         }
 
         public void InitSocket(string url, int port, Action callback)
@@ -76,15 +94,15 @@ namespace EENet
            return isReady;
         }
 
-        public Packet ReadPacket()
+        public void OnDisconnect()
         {
-            if (!isReady)
-            {
-                Debug.Log("TcpSocket is not ready. can not read packet..");
-                return null;
-            }
-            Packet p = Packet.ReadFromBinaryReader(this.binaryReader);
-            return p;
+            ee.NetworkStateChange(NetworkState.ERROR);
+            Dispose();
+        }
+
+        public void ReadPacket()
+        {
+            this.codec.Decode();
         }
 
         public void WritePacket(Packet packet)
@@ -94,9 +112,15 @@ namespace EENet
                 Debug.Log("TcpSocket is not ready. can not write packet..");
                 return;
             }
-            byte[] data = packet.ToBytes();
-            binaryWriter.Write(data);
-            binaryWriter.Flush();
+            byte[] data = this.codec.Encode(packet);
+            this.asyncSendCallback = binaryWriter.BaseStream.BeginWrite(data, 0, data.Length, new AsyncCallback(WritePacketCallback), binaryWriter.BaseStream);
+            // binaryWriter.Write(data);
+            // binaryWriter.Flush();
+        }
+
+        private void WritePacketCallback(IAsyncResult result)
+        {
+            binaryWriter.BaseStream.EndWrite(result);
         }
     }
 }

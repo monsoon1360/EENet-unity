@@ -45,6 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\EENet\Scripts\Bound\IBound.cs" />
+     <Compile Include="Assets\EENet\Scripts\Bound\InboundState.cs" />
+     <Compile Include="Assets\EENet\Scripts\Bound\PacketBoundHandler.cs" />
      <Compile Include="Assets\EENet\Scripts\ByteBuffer.cs" />
      <Compile Include="Assets\EENet\Scripts\EEClient.cs" />
      <Compile Include="Assets\EENet\Scripts\EventManager.cs" />
@@ -53,6 +56,7 @@
      <Compile Include="Assets\EENet\Scripts\PacketType.cs" />
      <Compile Include="Assets\EENet\Scripts\Protocol\IProtocol.cs" />
      <Compile Include="Assets\EENet\Scripts\Protocol\MsgpackProtocolImpl.cs" />
+     <Compile Include="Assets\EENet\Scripts\Test\LoginMessage.cs" />
      <Compile Include="Assets\EENet\Scripts\Test\TestEEClient.cs" />
      <Compile Include="Assets\EENet\Scripts\Transport\ITransport.cs" />
      <Compile Include="Assets\EENet\Scripts\Transport\TcpTransportImpl.cs" />

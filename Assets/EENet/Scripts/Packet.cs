@@ -128,43 +128,133 @@ namespace EENet
             this.packetType = type;
         }
 
+
+        public static Packet ReadFromBytes(byte[] data)
+        {
+            try 
+            {
+                int offset = 0;
+                var fixHead = data[offset];
+                byte flag = (byte) (fixHead >> 4);
+                if ( ! isPacketTypeValid(flag) ) 
+                {
+                    throw new PacketException("Invalid Packet Type");
+                }
+                offset ++;
+                UInt32 remainLength = DecodeLengthFromBytes(data, ref offset);
+                Packet p = new Packet();
+                p.packetType = flag;
+                // check id head exist or not
+                if ( (fixHead & HEAD_MASK_ID) != 0)
+                {
+                    UInt32 id = (UInt32) ReadInt32FromBytes(data, ref offset);
+                    remainLength -= 4;
+                    p.id = id;
+                }
+                // check topic head exist or not
+                if ( (fixHead & HEAD_MASK_TOPIC) != 0)
+                {
+                    short topicLength = ReadShortFromBytes(data, ref offset);
+                    remainLength -= 2;
+                    byte[] topicBytes =  new byte[topicLength];
+                    Array.Copy(data, offset, topicBytes, 0, topicLength);
+                    p.topic = Encoding.Default.GetString(topicBytes);
+                    offset += topicLength;
+                    remainLength -= (UInt32)topicLength;
+                }
+                // check payload
+                if ( (fixHead & HEAD_MASK_PAYLOAD) != 0)
+                {
+                    if (remainLength > 0)
+                    {
+                        byte[] payloadBytes = new byte[remainLength];
+                        Array.Copy(data, offset, payloadBytes, 0, remainLength);
+                        p.payload = payloadBytes;
+                    }
+                }
+                return p;
+
+            }
+            catch(Exception e)
+            {
+                Debug.LogError("exception:" + e);
+                throw new PacketException("read packet exception");
+            }
+        }
+
+        public static UInt32 DecodeLengthFromBytes(byte[] data, ref int offset)
+        {
+            UInt32 rLength = 0;
+            int multiplier = 0;
+            while (multiplier < 27)
+            {
+                byte val = data[offset];
+                offset ++;
+                rLength |= ((UInt32)(val & 127)) << multiplier;
+                if ((val & 128) == 0)
+                {
+                    break;
+                }
+                multiplier += 7;
+            }
+            return rLength;
+        }
+
         public static Packet ReadFromBinaryReader(BinaryReader br)
         {
-            var fixHead = br.ReadByte();
-            byte flag = (byte)(fixHead >> 4);
+            try {
+                var fixHead = br.ReadByte();
+                byte flag = (byte)(fixHead >> 4);
 
-            if ( ! isPacketTypeValid(flag) ) {
-                throw new PacketException("Invalid Packet Type");
-            }
-            UInt32 remainLength = DecodeLength(br);
-            Packet p = new Packet();
-            p.packetType = flag;
-            // check id head exist or not
-            if ( (fixHead & HEAD_MASK_ID) != 0)
-            {
-                UInt32 id = (UInt32) readInt32(br);
-                remainLength -= 4;
-                p.id = id;
-            }
-            // check topic head exist or not
-            if ((fixHead & HEAD_MASK_TOPIC) != 0)
-            {
-                short topicLength = readInt16(br);
-                remainLength -= 2;
-                byte[] topicBytes = br.ReadBytes(topicLength);
-                p.topic = Encoding.Default.GetString(topicBytes);
-                remainLength -= (UInt32)topicLength;
-            }
-            // check payload
-            if ( (fixHead & HEAD_MASK_PAYLOAD) != 0)
-            {
-                if (remainLength > 0)
-                {
-                   byte[] payloadBytes = br.ReadBytes((int)remainLength);
-                   p.payload = payloadBytes;
+                if ( ! isPacketTypeValid(flag) ) {
+                    throw new PacketException("Invalid Packet Type");
                 }
+                UInt32 remainLength = DecodeLength(br);
+                Packet p = new Packet();
+                p.packetType = flag;
+                // check id head exist or not
+                if ( (fixHead & HEAD_MASK_ID) != 0)
+                {
+                    UInt32 id = (UInt32) readInt32(br);
+                    remainLength -= 4;
+                    p.id = id;
+                }
+                // check topic head exist or not
+                if ((fixHead & HEAD_MASK_TOPIC) != 0)
+                {
+                    short topicLength = readInt16(br);
+                    remainLength -= 2;
+                    byte[] topicBytes = br.ReadBytes(topicLength);
+                    p.topic = Encoding.Default.GetString(topicBytes);
+                    remainLength -= (UInt32)topicLength;
+                }
+                // check payload
+                if ( (fixHead & HEAD_MASK_PAYLOAD) != 0)
+                {
+                    if (remainLength > 0)
+                    {
+                    byte[] payloadBytes = br.ReadBytes((int)remainLength);
+                    p.payload = payloadBytes;
+                    }
+                }
+                return p;
+            } catch(Exception e) {
+                Debug.LogError("exception:" + e);
+                throw new PacketException("read packet exception");
             }
-            return p;
+            
+        }
+
+        private static short ReadShortFromBytes(byte[] data, ref int offset)
+        {
+            byte[] shortBytes = new byte[2];
+            Array.Copy(data, offset, shortBytes, 0, 2);
+            offset += 2;
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(shortBytes);
+            }
+            return BitConverter.ToInt16(shortBytes, 0);
         }
 
         private static short readInt16(BinaryReader br)
@@ -172,9 +262,34 @@ namespace EENet
             return IPAddress.HostToNetworkOrder(br.ReadInt16());
         }
 
+        private static Int32 ReadInt32FromBytes(byte[] data, ref int offset)
+        {
+
+            byte[] int32Byte = new byte[4];
+            Array.Copy(data, offset, int32Byte, 0, 4);
+            offset += 4;
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(int32Byte);
+            }
+            return BitConverter.ToInt32(int32Byte, 0);
+        }
+
         private static Int32 readInt32(BinaryReader br)
         {
             return IPAddress.HostToNetworkOrder(br.ReadInt32());
+        }
+
+         private static Int64 ReadInt64FromBytes(byte[] data, ref int offset)
+        {
+            byte[] longBytes = new byte[8];
+            Array.Copy(data, offset, longBytes, 0, 8);
+            offset += 8;
+            if (BitConverter.IsLittleEndian)
+            {
+                Array.Reverse(longBytes);
+            }
+            return BitConverter.ToInt64(longBytes, 0);
         }
 
         private static Int64 readInt64(BinaryReader br)
@@ -275,6 +390,12 @@ namespace EENet
             byte[]  resultByte = new byte[byteIndex];
             Array.Copy(encLength, resultByte, byteIndex);
             return resultByte;
+        }
+
+        public static bool IsFixHeadValid(byte fixHead)
+        {
+            byte pt =(byte)(fixHead >> 4);
+            return isPacketTypeValid(pt);
         }
 
         static bool isPacketTypeValid(byte pt)

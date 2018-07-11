@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Threading;
 using UnityEngine;
 
 namespace EENet
@@ -52,9 +51,13 @@ namespace EENet
             
         }
 
+        public String Version() {
+            return "0.1";
+        }
+
         public void InitClient(String host, int port, Action callback = null)
         {
-            transport = new TcpTransportImpl(this);
+            transport = new TcpTransportImpl(this, receiveBytes);
             protocol = new MsgpackProtocolImpl();
             eventMgr = new EventManager(protocol);
              transport.InitSocket(host, port, callback);
@@ -63,7 +66,7 @@ namespace EENet
         public void NetworkStateChange(NetworkState newState)
         {
             currNetworkState = newState;
-            Debug.Log("Change network state:" + currNetworkState);
+            // Debug.Log("Change network state:" + currNetworkState);
 
             if (NetworkStateChangedEvent != null)
             {
@@ -73,26 +76,17 @@ namespace EENet
 
         public void StartReceivePacket()
         {
-             Thread t = new Thread(receivePacket);
-             t.Start();
+             this.transport.ReadPacket();
         }
 
-        private void receivePacket()
+        private void receiveBytes(byte[] data)
         {
-            for (;;)
-            {
-                Debug.Log("receive pakcet...");
-                Packet p = transport.ReadPacket();
-                if (p == null)
-                {
-                    Debug.LogWarning("receive packet errror...");
-                    break;
-                }
-                Debug.Log("receive a new packet:" + p.ToString());
-                ProcessPacket(p);
-
-            }
+            Debug.Log("receive bytes:" + BitConverter.ToString(data));
+            Packet p = Packet.ReadFromBytes(data);
+            Debug.Log("receive a new packet:" + p.ToString());
+            ProcessPacket(p);
         }
+
 
         public void On(string route, Action<Dictionary<string, object>> action)
         {
@@ -137,7 +131,12 @@ namespace EENet
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            if (currNetworkState == NetworkState.CONNECTING)
+            {
+                this.transport.Dispose();
+            }
+            this.eventMgr.Dispose();
+            currNetworkState = NetworkState.CLOSED;
         }
     }
 }

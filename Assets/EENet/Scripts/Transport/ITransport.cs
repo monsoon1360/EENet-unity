@@ -1,6 +1,7 @@
 
 
 using System;
+using System.IO;
 
 namespace EENet
 {
@@ -9,11 +10,17 @@ namespace EENet
 
         void InitSocket(string url, int port, Action callback);
 
-        Packet ReadPacket();
+        void ReadPacket();
 
         void WritePacket(Packet p);
 
         bool  IsReady();
+
+        BinaryWriter  GetWriter();
+
+        BinaryReader  GetReader();
+
+        void OnDisconnect();
         
 
     }

@@ -2,6 +2,7 @@
 using System.Collections;
 using EENet;
 using System;
+using System.Collections.Generic;
 
 public class TestEEClient : MonoBehaviour {
 
@@ -15,14 +16,27 @@ public class TestEEClient : MonoBehaviour {
 		{
 			Debug.Log("state change:" + state);
 		};
-		mClient.InitClient("127.0.0.1", 4321, connectToServerCallback);
+		mClient.InitClient("39.106.112.186", 8001, connectToServerCallback);
 		
 	}
 
 
 	void connectToServerCallback()
-	{	
+	{
 		Debug.Log("Connect to server success!");
+		mClient.StartReceivePacket();
+
+		LoginMessage login = new LoginMessage();
+		login.User = "111";
+		login.Pwd = "222";
+		mClient.Request("gate.authuser", login, AuthUserCallback);
+	}
+
+	private void AuthUserCallback(Dictionary<string, object> result)
+	{
+		Debug.Log("login result" + result);
+		Debug.Log("result code:" + result["ErrCode"]);
+		Debug.Log("result desc:" + result["ErrDesc"]);
 	}
 	
 	// Update is called once per frame

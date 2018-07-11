@@ -35,6 +35,8 @@ namespace EENet
             if (!callbackMap.ContainsKey(id)) return;
             Dictionary<string, object> dic = protocol.Unmarshal<Dictionary<string, object>>(msg);
             callbackMap[id].Invoke(dic);
+            // after invoke. remove id
+            callbackMap.Remove(id);
         }
 
         public void AddOnEvent(string eventName, Action<Dictionary<string, object>> callback)
